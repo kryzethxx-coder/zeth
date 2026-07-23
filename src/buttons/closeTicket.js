@@ -1,7 +1,9 @@
 const { PermissionFlagsBits } = require("discord.js");
 const { colors } = require("../config");
 const { createBrandEmbed } = require("../utils/branding");
+const logger = require("../utils/logger");
 const { findTicketOwnerByChannel, getGuildTicketConfig } = require("../utils/storage");
+const { safeSendTicketLog } = require("../utils/ticketLogs");
 
 module.exports = {
   customId: "ticket:close",
@@ -58,5 +60,18 @@ module.exports = {
     await interaction.channel.send({
       embeds: [closedEmbed],
     });
+
+    const ticketLogEmbed = createBrandEmbed({
+      title: "Ticket Closed",
+      description: [
+        `**Ticket:** ${interaction.channel}`,
+        `**Owner:** <@${ticketOwnerId}>`,
+        `**Closed By:** ${interaction.user}`,
+      ].join("\n"),
+      color: colors.danger,
+    });
+
+    await safeSendTicketLog(interaction.guild, ticketConfig, ticketLogEmbed);
+    logger.success("Ticket", `Closed ticket ${interaction.channel.name} by ${interaction.user.tag}.`);
   },
 };

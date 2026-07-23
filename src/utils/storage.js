@@ -78,10 +78,15 @@ function saveWelcomeState(state) {
   writeJson(dataPaths.welcome, state);
 }
 
-function setWelcomeChannel(guildId, channelId) {
+function setWelcomeConfig(guildId, config) {
   const state = getWelcomeState();
-  state.guilds[guildId] = { channelId };
+  const existing = state.guilds[guildId] || {};
+  state.guilds[guildId] = {
+    ...existing,
+    ...config,
+  };
   saveWelcomeState(state);
+  return state.guilds[guildId];
 }
 
 function getWelcomeConfig(guildId) {
@@ -96,6 +101,6 @@ module.exports = {
   getWelcomeConfig,
   removeOpenTicket,
   setOpenTicket,
-  setWelcomeChannel,
+  setWelcomeConfig,
   upsertGuildTicketConfig,
 };

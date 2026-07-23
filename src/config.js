@@ -27,8 +27,11 @@ module.exports = {
     neutral: 0x2b2d31,
   },
   dataPaths: {
+    autoRole: path.join(__dirname, "..", "data", "autorole.json"),
+    serverStatus: path.join(__dirname, "..", "data", "server-status.json"),
     ticketPanel: path.join(__dirname, "..", "data", "ticket-panel.json"),
     tickets: path.join(__dirname, "..", "data", "tickets.json"),
     welcome: path.join(__dirname, "..", "data", "welcome.json"),
+    welcomeAssets: path.join(__dirname, "..", "data", "welcome-assets"),
   },
 };

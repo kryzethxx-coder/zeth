@@ -1,9 +1,10 @@
 const { REST, Routes } = require("discord.js");
 const { clientId, devGuildId, token } = require("../config");
+const logger = require("../utils/logger");
 
 async function registerApplicationCommands(client) {
   if (!clientId || !token) {
-    console.warn("[Kryzeth] Skipping command registration because CLIENT_ID or DISCORD_TOKEN is missing.");
+    logger.warn("Commands", "Skipping command registration because CLIENT_ID or DISCORD_TOKEN is missing.");
     return;
   }
 
@@ -14,14 +15,14 @@ async function registerApplicationCommands(client) {
     await rest.put(Routes.applicationGuildCommands(clientId, devGuildId), {
       body: payload,
     });
-    console.log(`[Kryzeth] Registered ${payload.length} guild command(s) to ${devGuildId}.`);
+    logger.success("Commands", `Registered ${payload.length} guild command(s) to ${devGuildId}.`);
     return;
   }
 
   await rest.put(Routes.applicationCommands(clientId), {
     body: payload,
   });
-  console.log(`[Kryzeth] Registered ${payload.length} global command(s).`);
+  logger.success("Commands", `Registered ${payload.length} global command(s).`);
 }
 
 module.exports = registerApplicationCommands;

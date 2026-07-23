@@ -1,5 +1,8 @@
 const { PermissionFlagsBits } = require("discord.js");
+const { createBrandEmbed } = require("../utils/branding");
+const logger = require("../utils/logger");
 const { findTicketOwnerByChannel, getGuildTicketConfig, removeOpenTicket } = require("../utils/storage");
+const { safeSendTicketLog, safeSendTranscriptLog } = require("../utils/ticketLogs");
 
 module.exports = {
   customId: "ticket:delete",
@@ -37,7 +40,28 @@ module.exports = {
     }
 
     await interaction.deferUpdate();
+    const ticketName = interaction.channel.name;
+
+    await safeSendTranscriptLog({
+      guild: interaction.guild,
+      ticketConfig,
+      channel: interaction.channel,
+      ownerId: ticketOwnerId,
+      closedByTag: interaction.user.tag,
+    });
+
+    const deletedLogEmbed = createBrandEmbed({
+      title: "Ticket Deleted",
+      description: [
+        `**Ticket:** #${ticketName}`,
+        `**Owner:** <@${ticketOwnerId}>`,
+        `**Deleted By:** ${interaction.user}`,
+      ].join("\n"),
+    });
+
+    await safeSendTicketLog(interaction.guild, ticketConfig, deletedLogEmbed);
     removeOpenTicket(interaction.guildId, ticketOwnerId);
+    logger.success("Ticket", `Deleted ticket ${ticketName} by ${interaction.user.tag}.`);
     await interaction.channel.delete(`Ticket deleted by ${interaction.user.tag}`);
   },
 };

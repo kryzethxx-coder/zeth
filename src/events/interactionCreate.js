@@ -1,6 +1,7 @@
 const handleButton = require("../handlers/handleButton");
 const handleCommand = require("../handlers/handleCommand");
 const handleSelectMenu = require("../handlers/handleSelectMenu");
+const logger = require("../utils/logger");
 
 module.exports = {
   name: "interactionCreate",
@@ -10,7 +11,7 @@ module.exports = {
       try {
         await handleCommand(interaction, client);
       } catch (error) {
-        console.error(`[Kryzeth] Command error for /${interaction.commandName}:`, error);
+        logger.error("Command", `Command error for /${interaction.commandName}.`, error);
 
         if (interaction.deferred || interaction.replied) {
           await interaction.followUp({
@@ -32,7 +33,7 @@ module.exports = {
       try {
         await handleButton(interaction, client);
       } catch (error) {
-        console.error(`[Kryzeth] Button error for ${interaction.customId}:`, error);
+        logger.error("Button", `Button error for ${interaction.customId}.`, error);
 
         if (interaction.deferred || interaction.replied) {
           await interaction.followUp({
@@ -57,7 +58,7 @@ module.exports = {
     try {
       await handleSelectMenu(interaction, client);
     } catch (error) {
-      console.error(`[Kryzeth] Select menu error for ${interaction.customId}:`, error);
+      logger.error("SelectMenu", `Select menu error for ${interaction.customId}.`, error);
 
       if (interaction.deferred || interaction.replied) {
         await interaction.followUp({

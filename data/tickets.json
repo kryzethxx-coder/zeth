@@ -5,7 +5,9 @@
       "categoryId": "1529915963238125741",
       "panelChannelId": "1529912273953493082",
       "panelMessageId": "1529924645015257263",
-      "supportRoleId": "1529909648470180040"
+      "supportRoleId": "1529909648470180040",
+      "logChannelId": "1529972858707640530",
+      "transcriptChannelId": "1529972968162332892"
     }
   }
 }

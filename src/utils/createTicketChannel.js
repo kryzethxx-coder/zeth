@@ -6,12 +6,14 @@ const {
   PermissionFlagsBits,
 } = require("discord.js");
 const { createBrandEmbed, sanitizeChannelName } = require("./branding");
+const logger = require("./logger");
 const {
   getGuildTicketConfig,
   getOpenTicketChannelId,
   removeOpenTicket,
   setOpenTicket,
 } = require("./storage");
+const { safeSendTicketLog } = require("./ticketLogs");
 
 async function createTicketChannel(interaction, ticketType = null) {
   if (!interaction.inGuild()) {
@@ -125,6 +127,19 @@ async function createTicketChannel(interaction, ticketType = null) {
     embeds: [ticketEmbed],
     components: [controls],
   });
+
+  const createdLogEmbed = createBrandEmbed({
+    title: "Ticket Opened",
+    description: [
+      `**User:** ${interaction.user}`,
+      `**Ticket:** ${ticketChannel}`,
+      `**Type:** ${ticketLabel}`,
+      `**Created By:** ${interaction.user.tag}`,
+    ].join("\n"),
+  });
+
+  await safeSendTicketLog(interaction.guild, ticketConfig, createdLogEmbed);
+  logger.success("Ticket", `Created ticket ${ticketChannel.name} for ${interaction.user.tag}.`);
 
   await interaction.editReply({
     content: `Your ticket has been created: ${ticketChannel}`,

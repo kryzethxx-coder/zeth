@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { Collection } = require("discord.js");
+const logger = require("../utils/logger");
 
 function loadCommands() {
   const commands = new Collection();
@@ -12,6 +13,7 @@ function loadCommands() {
     commands.set(command.data.name, command);
   }
 
+  logger.success("Loader", `Loaded ${commands.size} command(s).`);
   return commands;
 }
 

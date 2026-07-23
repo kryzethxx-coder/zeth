@@ -5,9 +5,10 @@ const loadCommands = require("./handlers/loadCommands");
 const loadEvents = require("./handlers/loadEvents");
 const loadSelectMenus = require("./handlers/loadSelectMenus");
 const registerApplicationCommands = require("./handlers/registerCommands");
+const logger = require("./utils/logger");
 
 if (!token || !clientId) {
-  console.error("[Kryzeth] Missing DISCORD_TOKEN or CLIENT_ID in the environment.");
+  logger.error("Startup", "Missing DISCORD_TOKEN or CLIENT_ID in the environment.");
   process.exit(1);
 }
 
@@ -21,8 +22,9 @@ client.selectMenus = loadSelectMenus();
 client.registerApplicationCommands = () => registerApplicationCommands(client);
 
 loadEvents(client);
+logger.action("Startup", "Connecting to Discord...");
 
 client.login(token).catch((error) => {
-  console.error("[Kryzeth] Failed to start the bot:", error);
+  logger.error("Startup", "Failed to start the bot.", error);
   process.exit(1);
 });

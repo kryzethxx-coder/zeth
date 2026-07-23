@@ -1,3 +1,5 @@
+const logger = require("../utils/logger");
+
 module.exports = {
   name: "clientReady",
   once: true,
@@ -5,9 +7,9 @@ module.exports = {
     try {
       await client.registerApplicationCommands();
     } catch (error) {
-      console.error("[Kryzeth] Failed to register application commands:", error);
+      logger.error("Ready", "Failed to register application commands.", error);
     }
 
-    console.log(`[Kryzeth] Logged in as ${client.user.tag}.`);
+    logger.success("Ready", `Logged in as ${client.user.tag}.`);
   },
 };
