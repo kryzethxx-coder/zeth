@@ -1,0 +1,18 @@
+{
+  "name": "kryzeth-discord-bot",
+  "version": "1.0.0",
+  "description": "Professional Discord bot with tickets, welcome messages, and modular handlers.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "check": "node --check src/index.js"
+  },
+  "keywords": [],
+  "author": "Kryzeth </>",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "discord.js": "^14.27.0",
+    "dotenv": "^17.4.2"
+  }
+}

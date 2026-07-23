@@ -1,0 +1,28 @@
+{
+  "title": "Kryzeth Ticket Center",
+  "description": "Choose a ticket type from the dropdown below to open a private support ticket.",
+  "placeholder": "Select a ticket type...",
+  "types": [
+    {
+      "value": "support",
+      "label": "Support Ticket",
+      "description": "If you need any help",
+      "emoji": "🛟",
+      "channelPrefix": "support"
+    },
+    {
+      "value": "BUY NOW 💲",
+      "label": "BUY OUR PRODUCT",
+      "description": "CHOSE WHAT YOU WANT FROM BELLOW AND RISE A TICKET HERE",
+      "emoji": "⚠️",
+      "channelPrefix": "report"
+    },
+    {
+      "value": "suggestion",
+      "label": "Suggestion Ticket",
+      "description": "Share an idea or suggestion",
+      "emoji": "⭐",
+      "channelPrefix": "suggestion"
+    }
+  ]
+}
